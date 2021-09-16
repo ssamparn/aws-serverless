@@ -1,0 +1,3 @@
+com/lambda/aws/function/ReadOrdersFunction.class
+com/lambda/aws/function/CreateOrderFunction.class
+com/lambda/aws/model/Order.class
