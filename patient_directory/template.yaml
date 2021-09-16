@@ -30,9 +30,9 @@ Resources:
         TargetArn: !Ref PatientCheckoutDLQ
       Policies:
         - S3ReadPolicy:
-          BucketName: !Sub ${AWS::StackName}-${AWS::AccountId}-${AWS::Region}
+            BucketName: !Sub ${AWS::StackName}-${AWS::AccountId}-${AWS::Region}
         - SNSPublishMessagePolicy:
-          TopicName: !GetAtt PatientCheckoutTopic.TopicName
+            TopicName: !GetAtt PatientCheckoutTopic.TopicName
       Environment:
         Variables:
           PATIENT_CHECKOUT_TOPIC: !Ref PatientCheckoutTopic
@@ -54,16 +54,16 @@ Resources:
           Type: SNS
           Properties:
             Topic: !Ref PatientCheckoutTopic
-    ErrorHandlingFunction:
-      Type: AWS::Serverless::Function
-      Properties:
-        CodeUri: patientcheckout
-        Handler: com.lambda.aws.errorhandler.ErrorHandler::handler
-        Runtime: java11
-        MemorySize: 512
-        Events:
-          SNSEvent:
-            Type: SNS
-            Properties:
-              Topic: !Ref PatientCheckoutDLQ
+  ErrorHandlingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: patientcheckout
+      Handler: com.lambda.aws.errorhandler.ErrorHandler::handler
+      Runtime: java11
+      MemorySize: 512
+      Events:
+        SNSEvent:
+          Type: SNS
+          Properties:
+            Topic: !Ref PatientCheckoutDLQ
 

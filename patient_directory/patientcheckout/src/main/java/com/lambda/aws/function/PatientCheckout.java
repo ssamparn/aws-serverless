@@ -37,15 +37,17 @@ public class PatientCheckout {
                     .getObjectContent();
             try {
                 logger.info("Reading data from s3");
+
                 List<PatientCheckoutEvent> patientCheckoutEvents = Arrays
                         .asList(objectMapper.readValue(s3inputStream, PatientCheckoutEvent[].class));
-                logger.info(patientCheckoutEvents.toString());
                 s3inputStream.close();
-                logger.info("Message being published to SNS");
+
+                logger.info("Message being published to SNS: {}", patientCheckoutEvents);
+
                 publishMessageToSNS(patientCheckoutEvents);
             } catch (JsonMappingException e) {
                 logger.error("Exception is:", e);
-                throw new RuntimeException("Error while processing S3 event",e);
+                throw new RuntimeException("Error while processing S3 event", e);
             } catch (IOException e) {
                 e.printStackTrace();
             }

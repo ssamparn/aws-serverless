@@ -9,7 +9,7 @@ public class ErrorHandler {
 
     public void handler(SNSEvent event) {
         Logger logger = LoggerFactory.getLogger(ErrorHandler.class);
-        event.getRecords().forEach(record->logger.info("Dead Letter Queue Event"+record.toString()));
+        event.getRecords().forEach(record->logger.info("Dead Letter Queue Event: " + record.toString()));
     }
 
 }
